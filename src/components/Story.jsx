@@ -1,127 +1,126 @@
-import clsx from "clsx";
 import gsap from "gsap";
-import { useWindowScroll } from "react-use";
-import { useEffect, useRef, useState } from "react";
-import { TiLocationArrow } from "react-icons/ti";
+import { useRef } from "react";
 
 import Button from "./Button";
+import AnimatedTitle from "./AnimatedTitle";
 
-const navItems = ["Nexus", "Vault", "Prologue", "About", "Contact"];
+const FloatingImage = () => {
+  const frameRef = useRef(null);
 
-const NavBar = () => {
-  // State for toggling audio and visual indicator
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-  const [isIndicatorActive, setIsIndicatorActive] = useState(false);
+  const handleMouseMove = (e) => {
+    const { clientX, clientY } = e;
+    const element = frameRef.current;
 
-  // Refs for audio and navigation container
-  const audioElementRef = useRef(null);
-  const navContainerRef = useRef(null);
+    if (!element) return;
 
-  const { y: currentScrollY } = useWindowScroll();
-  const [isNavVisible, setIsNavVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+    const rect = element.getBoundingClientRect();
+    const xPos = clientX - rect.left;
+    const yPos = clientY - rect.top;
 
-  // Toggle audio and visual indicator
-  const toggleAudioIndicator = () => {
-    setIsAudioPlaying((prev) => !prev);
-    setIsIndicatorActive((prev) => !prev);
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((yPos - centerY) / centerY) * -10;
+    const rotateY = ((xPos - centerX) / centerX) * 10;
+
+    gsap.to(element, {
+      duration: 0.3,
+      rotateX,
+      rotateY,
+      transformPerspective: 500,
+      ease: "power1.inOut",
+    });
   };
 
-  // Manage audio playback
-  useEffect(() => {
-    if (isAudioPlaying) {
-      audioElementRef.current.play();
-    } else {
-      audioElementRef.current.pause();
+  const handleMouseLeave = () => {
+    const element = frameRef.current;
+
+    if (element) {
+      gsap.to(element, {
+        duration: 0.3,
+        rotateX: 0,
+        rotateY: 0,
+        ease: "power1.inOut",
+      });
     }
-  }, [isAudioPlaying]);
-
-  useEffect(() => {
-    if (currentScrollY === 0) {
-      // Topmost position: show navbar without floating-nav
-      setIsNavVisible(true);
-      navContainerRef.current.classList.remove("floating-nav");
-    } else if (currentScrollY > lastScrollY) {
-      // Scrolling down: hide navbar and apply floating-nav
-      setIsNavVisible(false);
-      navContainerRef.current.classList.add("floating-nav");
-    } else if (currentScrollY < lastScrollY) {
-      // Scrolling up: show navbar with floating-nav
-      setIsNavVisible(true);
-      navContainerRef.current.classList.add("floating-nav");
-    }
-
-    setLastScrollY(currentScrollY);
-  }, [currentScrollY, lastScrollY]);
-
-  useEffect(() => {
-    gsap.to(navContainerRef.current, {
-      y: isNavVisible ? 0 : -100,
-      opacity: isNavVisible ? 1 : 0,
-      duration: 0.2,
-    });
-  }, [isNavVisible]);
+  };
 
   return (
-    <div
-      ref={navContainerRef}
-      className="fixed inset-x-0 top-4 z-50 h-16 border-none transition-all duration-700 sm:inset-x-6"
-    >
-      <header className="absolute top-1/2 w-full -translate-y-1/2">
-        <nav className="flex size-full items-center justify-between p-4">
-          {/* Logo and Product button */}
-          <div className="flex items-center gap-7">
-            <img src="/img/logo.png" alt="logo" className="w-10" />
+    <div id="story" className="min-h-dvh w-screen bg-black text-blue-50">
+      <div className="flex size-full flex-col items-center py-10 pb-24">
+        <p className="font-general text-sm uppercase md:text-[10px]">
+          the multiversal ip world
+        </p>
 
-            <Button
-              id="product-button"
-              title="Products"
-              rightIcon={<TiLocationArrow />}
-              containerClass="bg-blue-50 md:flex hidden items-center justify-center gap-1"
-            />
-          </div>
+        <div className="relative size-full">
+          <AnimatedTitle
+            title="the st<b>o</b>ry of <br /> a hidden real<b>m</b>"
+            containerClass="mt-5 pointer-events-none mix-blend-difference relative z-10"
+          />
 
-          {/* Navigation Links and Audio Button */}
-          <div className="flex h-full items-center">
-            <div className="hidden md:block">
-              {navItems.map((item, index) => (
-                <a
-                  key={index}
-                  href={`#${item.toLowerCase()}`}
-                  className="nav-hover-btn"
-                >
-                  {item}
-                </a>
-              ))}
+          <div className="story-img-container">
+            <div className="story-img-mask">
+              <div className="story-img-content">
+                <img
+                  ref={frameRef}
+                  onMouseMove={handleMouseMove}
+                  onMouseLeave={handleMouseLeave}
+                  onMouseUp={handleMouseLeave}
+                  onMouseEnter={handleMouseLeave}
+                  src="/img/entrance.webp"
+                  alt="entrance.webp"
+                  className="object-contain"
+                />
+              </div>
             </div>
 
-            <button
-              onClick={toggleAudioIndicator}
-              className="ml-10 flex items-center space-x-0.5"
+            {/* for the rounded corner */}
+            <svg
+              className="invisible absolute size-0"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <audio
-                ref={audioElementRef}
-                className="hidden"
-                src="/audio/loop.mp3"
-                loop
-              />
-              {[1, 2, 3, 4].map((bar) => (
-                <div
-                  key={bar}
-                  className={clsx("indicator-line", {
-                    active: isIndicatorActive,
-                  })}
-                  style={{
-                    animationDelay: `${bar * 0.1}s`,
-                  }}
-                />
-              ))}
-            </button>
+              <defs>
+                <filter id="flt_tag">
+                  <feGaussianBlur
+                    in="SourceGraphic"
+                    stdDeviation="8"
+                    result="blur"
+                  />
+                  <feColorMatrix
+                    in="blur"
+                    mode="matrix"
+                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                    result="flt_tag"
+                  />
+                  <feComposite
+                    in="SourceGraphic"
+                    in2="flt_tag"
+                    operator="atop"
+                  />
+                </filter>
+              </defs>
+            </svg>
           </div>
-        </nav>
-      </header>
+        </div>
+
+        <div className="-mt-80 flex w-full justify-center md:-mt-64 md:me-44 md:justify-end">
+          <div className="flex h-full w-fit flex-col items-center md:items-start">
+            <p className="mt-3 max-w-sm text-center font-circular-web text-violet-50 md:text-start">
+              Where realms converge, lies Zentry and the boundless pillar.
+              Discover its secrets and shape your fate amidst infinite
+              opportunities.
+            </p>
+
+            <Button
+              id="realm-btn"
+              title="discover prologue"
+              containerClass="mt-5"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default NavBar;
+export default FloatingImage;
