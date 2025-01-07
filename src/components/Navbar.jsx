@@ -73,12 +73,12 @@ const NavBar = () => {
           <div className="flex items-center gap-7">
             <img src="/img/westwashin.jpg" alt="logo" className="w-10" />
 
-            <Button
+            {/* <Button
               id="product-button"
               title="Products"
               rightIcon={<TiLocationArrow />}
               containerClass="bg-blue-50 md:flex hidden items-center justify-center gap-1"
-            />
+            /> */}
           </div>
 
           {/* Navigation Links and Audio Button */}
@@ -102,7 +102,7 @@ const NavBar = () => {
               <audio
                 ref={audioElementRef}
                 className="hidden"
-                src="/audio/loop.mp3"
+                src="/audio/cornfield.mp3"
                 loop
               />
               {[1, 2, 3, 4].map((bar) => (

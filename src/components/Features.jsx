@@ -103,12 +103,10 @@ const Features = () => (
     <div className="container mx-auto px-3 md:px-10">
       <div className="px-5 py-32">
         <p className="font-circular-web text-lg text-blue-50">
-          Into the Metagame Layer
+          My Projects Portfolio
         </p>
         <p className="max-w-md font-circular-web text-lg text-blue-50 opacity-50">
-          Immerse yourself in a rich and ever-expanding universe where a vibrant
-          array of products converge into an interconnected overlay experience
-          on your world.
+          This project demonstrates a creative and technical solution to address a specific challenge or need. Designed with a focus on functionality, usability, and innovation, the project highlights expertise in problem-solving and development.
         </p>
       </div>
 
@@ -117,7 +115,7 @@ const Features = () => (
           src="videos/fitur-1.mp4"
           title={
             <>
-              radia<b>n</b>t
+              pr<b>oje</b>ct 1
             </>
           }
           description="A cross-platform metagame app, turning your activities across Web2 and Web3 games into a rewarding adventure."
@@ -131,7 +129,7 @@ const Features = () => (
             src="videos/fitur-2.mp4"
             title={
               <>
-                zig<b>m</b>a
+                pr<b>oje</b>ct 2
               </>
             }
             description="An anime and gaming-inspired NFT collection - the IP primed for expansion."
@@ -144,7 +142,7 @@ const Features = () => (
             src="videos/fitur-3.mp4"
             title={
               <>
-                n<b>e</b>xus
+                pr<b>oje</b>ct 3
               </>
             }
             description="A gamified social hub, adding a new dimension of play to social interaction for Web3 communities."
@@ -157,7 +155,7 @@ const Features = () => (
             src="videos/fitur-4.mp4"
             title={
               <>
-                az<b>u</b>l
+                pr<b>oje</b>ct 4
               </>
             }
             description="A cross-world AI Agent - elevating your gameplay to be more fun and productive."
