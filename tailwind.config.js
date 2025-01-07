@@ -1,17 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       fontFamily: {
-        zentry: ['zentry', 'sanf-serif'],
-        general: ['general', 'sanf-serif'],
-        'circular-web':['circular-web', 'sanf-serif'],
-        'robert-medium': ['robert-medium', 'sanf-serif'],
-        'robert-regular':['robert-regular', 'sanf-serif'],
+        zentry: ["zentry", "sans-serif"],
+        general: ["general", "sans-serif"],
+        "circular-web": ["circular-web", "sans-serif"],
+        "robert-medium": ["robert-medium", "sans-serif"],
+        "robert-regular": ["robert-regular", "sans-serif"],
       },
       colors: {
         blue: {
@@ -28,8 +25,8 @@ export default {
           100: "#8e983f",
           300: "#edff66",
         },
-      }
+      },
     },
   },
   plugins: [],
-}
+};
